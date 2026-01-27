@@ -1,0 +1,49 @@
+@GameStores.Api_HostAddress = http://localhost:5298
+
+GET {{GameStores.Api_HostAddress}}/accounts/
+
+###
+GET {{GameStores.Api_HostAddress}}/accounts/4
+
+###
+POST {{GameStores.Api_HostAddress}}/accounts
+Content-Type: application/json
+
+{
+    "name": "Ferdiansyah Pratama",
+    "email": "ferdi@example.test",
+    "password": "ferdi*2122",
+    "role": 2,
+    "studioName": "Ferdi INC"
+}
+
+###
+PUT {{GameStores.Api_HostAddress}}/accounts/4
+Content-Type: application/json
+
+{
+    "name": "Ferdiansyah Pratama",
+    "email": "ferdiansyahpratama716@example.test",
+    "password": "ferdiansyah*2122",
+    "role": 1
+}
+
+###
+DELETE {{GameStores.Api_HostAddress}}/accounts/4
+
+
+###
+GET {{GameStores.Api_HostAddress}}/developers
+
+###
+GET {{GameStores.Api_HostAddress}}/developers/1
+
+###
+PUT {{GameStores.Api_HostAddress}}/developers/1
+Content-Type: application/json
+
+{
+    "studioName": "Rockstar Company",
+    "description": "Rockstar adalah studio pengembang game yang populer dan salah satu yang terbesar",
+    "website": "www.rockstar.com"
+}
