@@ -74,3 +74,37 @@ Content-Type: application/json
 ###
 DELETE {{GameStores.Api_HostAddress}}/genres/5
 
+###
+GET {{GameStores.Api_HostAddress}}/games
+
+###
+GET {{GameStores.Api_HostAddress}}/games/5
+
+###
+POST {{GameStores.Api_HostAddress}}/games
+Content-Type: application/json
+
+{
+    "title": "Bully",
+    "description": "Kehidupan siswa bermasalah di sekolah Bullworth dengan gaya open world mini.",
+    "price": 9.00,
+    "releaseDate": "2006-11-17",
+    "developerId": 1,
+    "genreIds": [2, 1]
+}
+
+###
+PUT {{GameStores.Api_HostAddress}}/games/5
+Content-Type: application/json
+
+{
+    "title": "Bullys",
+    "description": "Kehidupan siswa bermasalah di sekolah Bullworth dengan gaya open world mini.",
+    "price": 9.00,
+    "releaseDate": "2006-11-17",
+    "developerId": 1,
+    "genreIds": [2]
+}
+
+###
+DELETE {{GameStores.Api_HostAddress}}/games/5

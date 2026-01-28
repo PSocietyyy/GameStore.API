@@ -13,6 +13,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,6 +21,7 @@
     <Folder Include="Dtos\" />
     <Folder Include="Dtos\Accounts\" />
     <Folder Include="Dtos\Developer\" />
+    <Folder Include="Dtos\Game\" />
     <Folder Include="Dtos\Genre\" />
     <Folder Include="Endpoints\" />
     <Folder Include="Models\" />

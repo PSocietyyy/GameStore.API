@@ -147,3 +147,6 @@ C:\Users\ferdi\OneDrive\ドキュメント\GameStores\GameStores.Api\obj\Debug\n
 C:\Users\ferdi\OneDrive\ドキュメント\GameStores\GameStores.Api\obj\Debug\net10.0\GameStores.Api.genruntimeconfig.cache
 C:\Users\ferdi\OneDrive\ドキュメント\GameStores\GameStores.Api\obj\Debug\net10.0\ref\GameStores.Api.dll
 C:\Users\ferdi\OneDrive\ドキュメント\GameStores\GameStores.Api\obj\Debug\net10.0\GameStores.Api.sourcelink.json
+C:\Users\ferdi\OneDrive\ドキュメント\GameStores\GameStores.Api\bin\Debug\net10.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\ferdi\OneDrive\ドキュメント\GameStores\GameStores.Api\bin\Debug\net10.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\ferdi\OneDrive\ドキュメント\GameStores\GameStores.Api\bin\Debug\net10.0\Swashbuckle.AspNetCore.SwaggerUI.dll
