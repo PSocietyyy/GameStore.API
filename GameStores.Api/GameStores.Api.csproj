@@ -20,6 +20,7 @@
     <Folder Include="Dtos\" />
     <Folder Include="Dtos\Accounts\" />
     <Folder Include="Dtos\Developer\" />
+    <Folder Include="Dtos\Genre\" />
     <Folder Include="Endpoints\" />
     <Folder Include="Models\" />
   </ItemGroup>

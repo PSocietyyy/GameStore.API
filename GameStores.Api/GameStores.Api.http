@@ -47,3 +47,30 @@ Content-Type: application/json
     "description": "Rockstar adalah studio pengembang game yang populer dan salah satu yang terbesar",
     "website": "www.rockstar.com"
 }
+
+
+###
+Get {{GameStores.Api_HostAddress}}/genres
+
+###
+GET  {{GameStores.Api_HostAddress}}/genres/1
+
+###
+POST {{GameStores.Api_HostAddress}}/genres
+Content-Type: application/json
+
+{
+    "name": "Salah"
+}
+
+###
+PUT {{GameStores.Api_HostAddress}}/genres/5
+Content-Type: application/json
+
+{
+    "name": "Beneran Salah"
+}
+
+###
+DELETE {{GameStores.Api_HostAddress}}/genres/5
+

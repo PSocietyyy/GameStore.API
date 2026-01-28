@@ -18,6 +18,8 @@ if (app.Environment.IsDevelopment())
 
 app.MapAccountEndpoints();
 app.MapDeveloperEndpoints();
+app.MapGenreEndpoints();
+
 
 app.migrateDb();
 app.Run();
