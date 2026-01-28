@@ -25,6 +25,7 @@
     <Folder Include="Dtos\Genre\" />
     <Folder Include="Endpoints\" />
     <Folder Include="Models\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

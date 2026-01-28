@@ -1,8 +1,5 @@
-using System;
-using GameStores.Api.Data;
 using GameStores.Api.Dtos.Genre;
-using GameStores.Api.Models;
-using Microsoft.EntityFrameworkCore;
+using GameStores.Api.Services;
 
 namespace GameStores.Api.Endpoints;
 
@@ -12,59 +9,51 @@ public static class GenreEndpoints
     {
         var group = app.MapGroup("/genres");
 
-        // Get All genre
-        group.MapGet("/", async (GameStoreContext dbContext) =>
+        // GET ALL
+        group.MapGet("/", async (GenreService service) =>
         {
-            var genres = await dbContext.Genres.Select(g => new GenreDto(
-                Id: g.Id,
-                Name: g.Name
-            )).AsNoTracking().ToListAsync();
-            return Results.Ok(genres);
+            return Results.Ok(await service.GetAllAsync());
         });
 
-        // Get Genre By Id
-        group.MapGet("/{id}", async (int id, GameStoreContext dbContext) =>
+        // GET BY ID
+        group.MapGet("/{id:int}", async (int id, GenreService service) =>
         {
-            var genre = await dbContext.Genres.FindAsync(id);
-            if(genre is null)
-            {
-                return Results.NotFound();
-            }
-            return Results.Ok(new GenreDto(Id: genre.Id, Name: genre.Name));
-        }).WithName("GetGenreById");
+            var genre = await service.GetByIdAsync(id);
+            return genre is null
+                ? Results.NotFound()
+                : Results.Ok(genre);
+        })
+        .WithName("GetGenreById");
 
-        // Create Genre
-        group.MapPost("/", async (CreateGenreDto newGenre, GameStoreContext dbContext) =>
+        // CREATE
+        group.MapPost("/", async (CreateGenreDto dto, GenreService service) =>
         {
-            Genre genre = new()
-            {
-                Name = newGenre.Name
-            };
-
-            dbContext.Add(genre);
-            await dbContext.SaveChangesAsync();
-            var createdGenre = new GenreDto(Id: genre.Id, Name: genre.Name);
-            return Results.CreatedAtRoute("GetGenreById", new {id = genre.Id}, createdGenre);
+            var genre = await service.CreateAsync(dto);
+            return Results.CreatedAtRoute(
+                "GetGenreById",
+                new { id = genre.Id },
+                genre
+            );
         });
 
-        // UpdateGenre
-        group.MapPut("/{id}", async(int id, UpdateGenreDto updatedGenre, GameStoreContext dbContext) =>
+        // UPDATE
+        group.MapPut("/{id:int}", async (
+            int id,
+            UpdateGenreDto dto,
+            GenreService service
+        ) =>
         {
-            var existingGenre = await dbContext.Genres.FindAsync(id);
-            if(existingGenre is null)
-            {
-                return Results.NotFound();
-            }
-            existingGenre.Name = updatedGenre.Name;
-            await dbContext.SaveChangesAsync();
-            return Results.NoContent();
+            return await service.UpdateAsync(id, dto)
+                ? Results.NoContent()
+                : Results.NotFound();
         });
 
-        // Delete Genre
-        group.MapDelete("/{id}", async (int id, GameStoreContext dbContext) =>
+        // DELETE
+        group.MapDelete("/{id:int}", async (int id, GenreService service) =>
         {
-            await dbContext.Genres.Where(g=>g.Id == id).ExecuteDeleteAsync();
-            return Results.NoContent();
+            return await service.DeleteAsync(id)
+                ? Results.NoContent()
+                : Results.NotFound();
         });
     }
 }
