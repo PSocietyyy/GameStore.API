@@ -85,6 +85,9 @@ namespace GameStores.Api.Data.Migrations
                     b.Property<int>("DeveloperId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("TEXT");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("TEXT");
 

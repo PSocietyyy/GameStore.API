@@ -1,5 +1,6 @@
 using GameStores.Api.Dtos.Game;
 using GameStores.Api.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GameStores.Api.Endpoints;
 
@@ -25,13 +26,13 @@ public static class GameEndpoints
         });
 
         // CREATE
-        group.MapPost("/", async (CreateGameDto dto, GameService service) =>
+        group.MapPost("/", async ([FromForm] CreateGameDto dto, GameService service) =>
         {
             var result = await service.CreateAsync(dto);
             return result.IsSuccess
                 ? Results.Created($"/games/{result.GameId}", new { result.GameId })
                 : Results.BadRequest(result.Error);
-        });
+        }).DisableAntiforgery();
 
         // UPDATE
         group.MapPut("/{id:int}", async (
@@ -44,7 +45,22 @@ public static class GameEndpoints
             return success
                 ? Results.NoContent()
                 : Results.NotFound();
-        });
+        }).DisableAntiforgery();
+
+        // UPDATE IMAGE
+        group.MapPost("/{id}/image", async (
+            int id,
+            [FromForm] IFormFile image,
+            GameService service
+        ) =>
+        {
+            var success = await service.UpdateImageAsync(id, image);
+            return success
+                ? Results.NoContent()
+                : Results.NotFound();
+        })
+        .DisableAntiforgery();
+
 
         // DELETE
         group.MapDelete("/{id:int}", async (int id, GameService service) =>

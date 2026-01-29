@@ -8,5 +8,6 @@ public record GameDto
     decimal Price,
     DateOnly ReleaseDate,
     string DeveloperName,
-    List<string> Genres
+    List<string> Genres,
+    string? ImageUrl
 );

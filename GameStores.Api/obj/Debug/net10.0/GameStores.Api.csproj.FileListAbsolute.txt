@@ -150,3 +150,4 @@ C:\Users\ferdi\OneDrive\ドキュメント\GameStores\GameStores.Api\obj\Debug\n
 C:\Users\ferdi\OneDrive\ドキュメント\GameStores\GameStores.Api\bin\Debug\net10.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\ferdi\OneDrive\ドキュメント\GameStores\GameStores.Api\bin\Debug\net10.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\ferdi\OneDrive\ドキュメント\GameStores\GameStores.Api\bin\Debug\net10.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\ferdi\OneDrive\ドキュメント\GameStores\GameStores.Api\bin\Debug\net10.0\GameStores.Api.staticwebassets.runtime.json

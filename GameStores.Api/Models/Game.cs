@@ -11,6 +11,7 @@ public class Game
     public required string Description {get;set;}
     public decimal Price {get; set;}
     public DateOnly ReleaseDate {get; set;}
+    public string? ImageUrl {get; set;}
 
     public Developer? Developer {get; set;}
     public int DeveloperId {get; set;}

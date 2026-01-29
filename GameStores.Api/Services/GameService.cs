@@ -10,10 +10,12 @@ namespace GameStores.Api.Services;
 public class GameService
 {
     private readonly GameStoreContext _db;
+    private readonly IWebHostEnvironment _env;
 
-    public GameService(GameStoreContext db)
+    public GameService(GameStoreContext db, IWebHostEnvironment env)
     {
         _db = db;
+        _env = env;
     }
 
     // READ ALL
@@ -31,7 +33,8 @@ public class GameService
                 g.Price,
                 g.ReleaseDate,
                 g.Developer!.StudioName,
-                g.GameGenres.Select(gg => gg.Genre.Name).ToList()
+                g.GameGenres.Select(gg => gg.Genre.Name).ToList(),
+                g.ImageUrl
             ))
             .ToListAsync();
     }
@@ -51,6 +54,7 @@ public class GameService
                 g.Description,
                 g.Price,
                 g.ReleaseDate,
+                g.ImageUrl,
                 new DeveloperDto(
                     g.Developer!.Id,
                     g.Developer.StudioName,
@@ -77,6 +81,23 @@ public class GameService
         if (genres.Count != dto.GenreIds.Count)
             return (false, 0, "Salah satu genre tidak ditemukan");
 
+        string? imagePath = null;
+        if(dto.Image is not null)
+        {
+            var webRoot = _env.WebRootPath ?? throw new InvalidOperationException("Web root belum di konfigurasi");
+            var uploadsFolder = Path.Combine(_env.WebRootPath, "images");
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
+            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(dto.Image.FileName)}";
+            var fullPath = Path.Combine(uploadsFolder, fileName);
+
+            using var stream = new FileStream(fullPath, FileMode.Create);
+            await dto.Image.CopyToAsync(stream);
+            imagePath = $"/images/{fileName}";
+        }
+
         var game = new Game
         {
             Title = dto.Title,
@@ -84,6 +105,7 @@ public class GameService
             Price = dto.Price,
             ReleaseDate = dto.ReleaseDate,
             DeveloperId = dto.DeveloperId,
+            ImageUrl = imagePath,
             GameGenres = genres.Select(g => new GameGenre
             {
                 GenreId = g.Id
@@ -121,6 +143,38 @@ public class GameService
         ).ToList();
 
         await _db.SaveChangesAsync();
+        return true;
+    }
+
+    // Update Foto
+    public async Task<bool> UpdateImageAsync(int id, IFormFile image)
+    {
+        var game = await _db.Games.FindAsync(id);
+        if (game is null) return false;
+
+        var webRoot = _env.WebRootPath
+            ?? throw new InvalidOperationException("WebRootPath belum dikonfigurasi");
+
+        var uploadsFolder = Path.Combine(webRoot, "games");
+        Directory.CreateDirectory(uploadsFolder);
+
+        // hapus lama
+        if (!string.IsNullOrWhiteSpace(game.ImageUrl))
+        {
+            var oldPath = Path.Combine(webRoot, game.ImageUrl.TrimStart('/'));
+            if (File.Exists(oldPath))
+                File.Delete(oldPath);
+        }
+
+        var fileName = $"{Guid.NewGuid()}{Path.GetExtension(image.FileName)}";
+        var fullPath = Path.Combine(uploadsFolder, fileName);
+
+        using var stream = new FileStream(fullPath, FileMode.Create);
+        await image.CopyToAsync(stream);
+
+        game.ImageUrl = $"/games/{fileName}";
+        await _db.SaveChangesAsync();
+
         return true;
     }
 

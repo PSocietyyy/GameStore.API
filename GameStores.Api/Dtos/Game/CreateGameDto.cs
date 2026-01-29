@@ -6,5 +6,6 @@ public record CreateGameDto(
     decimal Price,
     DateOnly ReleaseDate,
     int DeveloperId,
-    List<int> GenreIds
+    List<int> GenreIds,
+    IFormFile? Image
 );

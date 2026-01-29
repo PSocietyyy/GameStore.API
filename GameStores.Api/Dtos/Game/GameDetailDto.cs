@@ -10,6 +10,7 @@ public record GameDetailDto(
     string Description,
     decimal Price,
     DateOnly ReleaseDate,
+    string? ImageUrl,
     DeveloperDto Developer,
     List<GenreDto> Genres
 );

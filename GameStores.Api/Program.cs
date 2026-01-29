@@ -19,7 +19,7 @@ builder.Services.AddScoped<GenreService>();
 builder.Services.AddScoped<GameService>();
 
 var app = builder.Build();
-
+app.UseStaticFiles();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
